@@ -1,34 +1,38 @@
-import './App.css';
-import React, { useEffect, useState } from 'react';
-import Nav from './navbar';
+import "./App.css";
+import React, { useEffect, useState } from "react";
+import { Link, Switch, Route } from "react-router-dom/cjs/react-router-dom";
+
+import Nav from "./navbar";
+import Login from "./login";
+import Routes from "./route";
 
 function App() {
   const [value, setValue] = useState([]);
-  const [topic] = useState('india');
-  
+  const [topic, setTopic] = useState("india");
 
-  function date (){
+  useEffect(() => {});
+
+  function date() {
     // Get the current date
-const currentDate = new Date();
+    const currentDate = new Date();
 
-// Extract individual components of the date
-const year = currentDate.getFullYear();
-const month = currentDate.getMonth() + 1; // Note: Month is 0-indexed, so we add 1
-const day = currentDate.getDate();
+    // Extract individual components of the date
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Note: Month is 0-indexed, so we add 1
+    const day = currentDate.getDate();
 
-// Format the date as a string
-const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+    // Format the date as a string
+    const formattedDate = `${year}-${month < 10 ? "0" : ""}${month}-${
+      day < 10 ? "0" : ""
+    }${day}`;
 
-// console.log(formattedDate); // Output: "YYYY-MM-DD" format of current date
-
+    // console.log(formattedDate); // Output: "YYYY-MM-DD" format of current date
   }
-
- 
 
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=india&from=${date()}&sortBy=publishedAt&apiKey=59cf5131091d478aa74796ffe3ef19f1`
+        `https://newsapi.org/v2/everything?q=${topic}&from=${date()}&sortBy=publishedAt&apiKey=59cf5131091d478aa74796ffe3ef19f1`
       );
       const result = await response.json();
       console.log(result);
@@ -37,8 +41,10 @@ const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0'
         const mappedArticles = result.articles
           .filter((a) => a.urlToImage !== null)
           .map((a) => (
-      
-            <div className="max-w-sm rounded overflow-hidden shadow-lg" key={Math.random()}>
+            <div
+              className="max-w-sm rounded overflow-hidden shadow-lg"
+              key={Math.random()}
+            >
               <img className="w-full" src={a.urlToImage} alt="img" />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">{a.title}</div>
@@ -68,6 +74,14 @@ const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0'
   return (
     <div>
       <Nav />
+
+      <Switch>
+        <Routes>
+          <Route exact path="/login" component={Login}>
+          </Route>
+        </Routes>
+      </Switch>
+
       <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
         {value}
       </div>

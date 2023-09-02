@@ -18,8 +18,8 @@ const Nav = () => {
         {/* <SearchBar /> */}
 
         <div className="flex items-center">
-            <a href="tel:5541251234" className="mr-6 text-sm  text-gray-500 dark:text-white hover:underline"> </a>
-            <a href="/login" className="text-sm  text-blue-600 dark:text-blue-500 hover:underline">Login</a>
+            <a href="tel:5541251234" className="mr-6 text-sm  text-gray-500 dark:text-white hover:underline">   <Link to="/login" >Login</Link> </a>
+            <Link to="/login" >Login</Link>
         </div>
     </div>
 </nav>
